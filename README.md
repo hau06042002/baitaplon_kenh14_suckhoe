@@ -33,7 +33,7 @@ Chương trình sử dụng thư viện `schedule` để tự động chạy và
     Clone project từ GitHub về máy:
 
     ```bash
-    git clone https://github.com/<your-username>/baitaplon_kenh14_suckhoe.git
+    git clone https://github.com/hau06042002/baitaplon_kenh14_suckhoe.git
     cd baitaplon_kenh14_suckhoe
     ```
 
