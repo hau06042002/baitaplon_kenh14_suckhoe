@@ -73,7 +73,7 @@ python scrape_kenh14_health.py
 
 ---
 
-### 44. **Cấu trúc file CSV**
+### 4. **Cấu trúc file CSV**
 
 ````markdown
 ## Cấu trúc file CSV
@@ -103,7 +103,7 @@ schedule.every().day.at("06:00").do(scrape_data)
 
 ---
 
-### 7. **Lưu ý**
+### 5. **Lưu ý**
 
 - Để chương trình hoạt động, bạn cần để file Python chạy liên tục.
 - Nếu muốn chạy tự động mà không cần mở Python, bạn có thể sử dụng **Task Scheduler** trên Windows.
