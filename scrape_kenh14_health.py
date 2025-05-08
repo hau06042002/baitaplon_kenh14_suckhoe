@@ -74,7 +74,7 @@ def scrape_health_data():
 # Gọi hàm để thực hiện thu thập dữ liệu
 scrape_health_data()
 
-# Lên lịch chạy lúc 7:15 sáng mỗi ngày
+# Lên lịch chạy lúc 6:00 sáng mỗi ngày
 schedule.every().day.at("06:00").do(scrape_health_data)
 
 print("Đang chờ đến thời gian chạy...")
