@@ -4,12 +4,34 @@ import pandas as pd
 import schedule
 import time
 
-# URL của chuyên mục Sức Khỏe
-url = "https://kenh14.vn/suc-khoe.chn"
 
-# Hàm thu thập dữ liệu
-def scrape_data():
-    response = requests.get(url)
+# URL trang chủ Kenh14
+base_url = "https://kenh14.vn/"
+
+# Hàm truy cập trang chủ và chọn chuyên mục "Sức Khỏe"
+def navigate_to_health_section():
+    response = requests.get(base_url)
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.text, 'html.parser')
+        # Tìm liên kết đến chuyên mục "Sức Khỏe"
+        health_section = soup.find('a', href="/suc-khoe.chn")
+        if health_section:
+            health_url = f"{base_url.strip('/')}{health_section['href']}"
+            return health_url
+        else:
+            print("Không tìm thấy chuyên mục 'Sức Khỏe'.")
+            return None
+    else:
+        print(f"Không thể truy cập trang chủ. Mã lỗi: {response.status_code}")
+        return None
+
+# Hàm thu thập dữ liệu từ chuyên mục "Sức Khỏe"
+def scrape_health_data():
+    health_url = navigate_to_health_section()
+    if not health_url:
+        return
+
+    response = requests.get(health_url)
     if response.status_code == 200:
         soup = BeautifulSoup(response.text, 'html.parser')
         articles = soup.find_all('div', class_='knswli-right')  # Lớp chứa thông tin bài viết
@@ -47,10 +69,13 @@ def scrape_data():
         df.to_csv('kenh14_health_articles.csv', index=False, encoding='utf-8-sig')
         print("Dữ liệu đã được lưu vào file 'kenh14_health_articles.csv'")
     else:
-        print(f"Không thể truy cập trang web. Mã lỗi: {response.status_code}")
+        print(f"Không thể truy cập chuyên mục 'Sức Khỏe'. Mã lỗi: {response.status_code}")
+
+# Gọi hàm để thực hiện thu thập dữ liệu
+scrape_health_data()
 
 # Lên lịch chạy lúc 7:15 sáng mỗi ngày
-schedule.every().day.at("06:00").do(scrape_data)
+schedule.every().day.at("06:00").do(scrape_health_data)
 
 print("Đang chờ đến thời gian chạy...")
 while True:
